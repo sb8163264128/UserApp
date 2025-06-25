@@ -28,48 +28,38 @@ class MainViewModel @Inject constructor(
     private val TAG = "MainViewModel"
 
     fun setLoadingState() {
-        Log.d(TAG, "Setting UI state to Loading.")
         _uiState.value = DeviceListUiState.Loading
     }
 
     fun processDeviceListJson(deviceListJson: String) {
-        Log.d(TAG, "Processing device list JSON. Current state: ${_uiState.value}")
         if (_uiState.value !is DeviceListUiState.Loading) {
             _uiState.value = DeviceListUiState.Loading
         }
 
         viewModelScope.launch {
             try {
-                // Perform JSON parsing on a background thread
                 val devices = withContext(Dispatchers.Default) {
-                    Log.d(TAG, "Parsing JSON on Dispatchers.Default")
                     val listType = object : TypeToken<List<DeviceListItem>>() {}.type
                     gson.fromJson<List<DeviceListItem>>(deviceListJson, listType)
                 }
-                Log.i(TAG, "Successfully parsed ${devices.size} devices. Updating UI to Success.")
                 _uiState.value = DeviceListUiState.Success(devices)
             } catch (e: JsonSyntaxException) {
-                Log.e(TAG, "JSON Syntax Error parsing device list: ${e.message}", e)
                 _uiState.value = DeviceListUiState.Error("Invalid data format from DataApp.")
             } catch (e: Exception) {
-                Log.e(TAG, "Error processing device list JSON: ${e.message}", e)
                 _uiState.value = DeviceListUiState.Error("Failed to process device data: ${e.message}")
             }
         }
     }
 
     fun processDeviceDetailsJson(deviceDetailsJson: String) {
-        Log.d(TAG, "Processing device details JSON.")
 
         viewModelScope.launch {
             try {
                 val details = withContext(Dispatchers.Default) {
-                    Log.d(TAG, "Parsing device details JSON on Dispatchers.Default")
                     gson.fromJson(deviceDetailsJson, DeviceDetails::class.java)
                 }
 
                 if (details?.id != null) {
-                    Log.i(TAG, "Successfully parsed details for device ID: ${details.id}. Details: $details")
 
                     val currentUiState = _uiState.value
                     if (currentUiState is DeviceListUiState.Success) {
@@ -80,8 +70,7 @@ class MainViewModel @Inject constructor(
                                 listItem
                             }
                         }
-                        _uiState.value = DeviceListUiState.Success(updatedList, details.id)
-                        Log.d(TAG, "Updated _uiState with details for device ID: ${details.id}")
+                        _uiState.value = DeviceListUiState.Success(updatedList)
                     } else {
                         Log.w(TAG, "Received device details, but current UI state is not Success. State: $currentUiState")
                     }
@@ -98,7 +87,6 @@ class MainViewModel @Inject constructor(
     }
 
     fun processDeviceListError(errorMessage: String) {
-        Log.e(TAG, "Processing error: $errorMessage. Current state: ${_uiState.value}")
         _uiState.value = DeviceListUiState.Error(errorMessage)
     }
 

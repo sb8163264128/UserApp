@@ -2,27 +2,7 @@ package com.unplugged.data.ipc
 
 object InterAppContracts {
 
-    // --- Actions ---
-    const val ACTION_REQUEST_DEVICE_LIST = "com.unplugged.dataapp.ACTION_REQUEST_DEVICE_LIST"
-    const val ACTION_REQUEST_DEVICE_DETAILS = "com.unplugged.dataapp.ACTION_REQUEST_DEVICE_DETAILS"
-
-    // --- Extras ---
-    const val EXTRA_RESULT_RECEIVER = "com.unplugged.dataapp.EXTRA_RESULT_RECEIVER"
-
-    // --- Result Codes (for ResultReceiver) ---
-    const val RESULT_CODE_SUCCESS = 0
-    const val RESULT_CODE_ERROR = 1
-
-    // --- Result Data Bundle Keys (for ResultReceiver's onReceiveResult data) ---
-    const val KEY_RESULT_DEVICE_LIST = "com.unplugged.dataapp.KEY_RESULT_DEVICE_LIST"
-    const val KEY_RESULT_DEVICE_DETAILS = "com.unplugged.dataapp.KEY_RESULT_DEVICE_DETAILS"
-    const val KEY_RESULT_ERROR_MESSAGE = "com.unplugged.dataapp.KEY_RESULT_ERROR_MESSAGE"
-
     const val DATA_APP_PACKAGE_NAME = "com.unplugged.dataapp"
-
-    const val DATA_APP_PERMISSION = "com.unplugged.dataapp.permission.SEND_DATA_REQUESTS"
-
-
 
     const val DEVICE_PROVIDER_ACTIVITY_ACTION = "com.unplugged.dataapp.action.PROVIDE_DEVICE_DATA"
 
