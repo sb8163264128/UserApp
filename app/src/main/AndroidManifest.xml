@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="com.unplugged.dataapp.permission.ACCESS_DEVICE_DATA_PROVIDER" />
+    <uses-permission android:name="com.unplugged.data.permission.ACCESS_DEVICE_LIST" />
 
     <application
         android:name=".App"
